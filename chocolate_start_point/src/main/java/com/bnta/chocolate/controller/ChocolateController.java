@@ -1,16 +1,15 @@
 package com.bnta.chocolate.controller;
 
 import com.bnta.chocolate.models.Chocolate;
+import com.bnta.chocolate.models.Estate;
 import com.bnta.chocolate.repositories.ChocolateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -31,7 +30,12 @@ public class ChocolateController {
                     chocolateRepository.findChocolateByCocoaPercentageGreaterThan(cocoaPercentage), HttpStatus.OK);
         }
         return new ResponseEntity<>(chocolateRepository.findAll(), HttpStatus.OK);
+    }
 
+    // SHOW
+    @GetMapping(value = "/{id}") //localhost:8080/chocolates/1
+    public ResponseEntity<Optional<Chocolate>> getChocolateById (@PathVariable Long id){
+        return new ResponseEntity<>(chocolateRepository.findById(id), HttpStatus.OK);
     }
 
 }
